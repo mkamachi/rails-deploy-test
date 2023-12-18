@@ -1,2 +1,3 @@
 # rails-deploy-test
-try to deploy automatically
+try to deploy automatically with Github Actions.
+
