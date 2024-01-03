@@ -60,11 +60,16 @@ jobs:
       #  run: bin/bundler-audit --update
       #- name: Security audit application code
       #  run: bin/brakeman -q -w2
+      - uses: reviewdog/action-brakeman@v2
+        with:
+          brakeman_version: gemfile # Gemfile.lockにあるバージョンを使う
+          filter_mode: nofilter # 全部のファイルを検知する
+          level: info
+          reporter: github-pr-review
+          fail_on_error: false # CIを失敗扱いにしない
       - name: rubocop
         uses: reviewdog/action-rubocop@v2
         with:
           rubocop_version: gemfile
           rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
           reporter: github-pr-review # Default is github-pr-check
-      # - name: Lint Ruby files
-      #  run: /usr/local/bundle/bin/rubocop --parallel
