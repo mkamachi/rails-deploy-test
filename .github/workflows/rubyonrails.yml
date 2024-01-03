@@ -47,6 +47,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
         with:
@@ -59,5 +60,11 @@ jobs:
       #  run: bin/bundler-audit --update
       #- name: Security audit application code
       #  run: bin/brakeman -q -w2
-      - name: Lint Ruby files
-        run: /usr/local/bundle/bin/rubocop --parallel
+      - name: rubocop
+        uses: reviewdog/action-rubocop@v2
+        with:
+          rubocop_version: gemfile
+          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
+          reporter: github-pr-review # Default is github-pr-check
+      # - name: Lint Ruby files
+      #  run: /usr/local/bundle/bin/rubocop --parallel
